@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Believe In You</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-header">
+        <h1>Believe In You</h1>
+        <p>今日も自分を信じよう</p>
+    </div>
+
+    <div class="content">
+
+        <!--気分記録-->
+        <div class="mood-section">
+            <p class="section-title">今日の気分は？</p>
+            <div class="mood-buttons">
+                <button class="mood-btn" onclick="selectMood('最高')">😄</button>
+                <button class="mood-btn" onclick="selectMood('良い')">😊</button>
+                <button class="mood-btn" onclick="selectMood('普通')">😑</button>
+                <button class="mood-btn" onclick="selectMood('良くない')">😣</button>
+                <button class="mood-btn" onclick="selectMood('最悪')">😓</button>
+            </div> <!--mood buttons-->
+            <p id="selectedMood" class="selected-mood"></p>
+        </div> <!--mood section-->
+
+        <!--今日の良いこと-->
+        <div class="good-section">
+            <p class="section-title">今日の良いこと</p>
+            <input id="goodInput" type="text" placeholder="小さいことでもOK！">
+            <button onclick="addGood()">追加する</button>
+            <ul id="goodList"></ul>
+        </div> <!--good section-->
+
+        <!--一言日記-->
+        <div class="diary-section">
+            <p class="section-title">今日の一言</p>
+            <textarea id="diaryInput" placeholder="今日はどんな日でしたか？"></textarea>
+        </div> <!--diary section-->
+
+        <!--保存ボタン-->
+        <button id="saveBtn" onclick="saveEntry()">今日を保存する</button>
+        
+    </div> <!--content-->
+    <script src="scripts.js"></script>
+</body>
+</html>
