@@ -155,3 +155,30 @@ ul li {
     font-weight: 500;
     cursor: pointer;
 }
+
+.history-section {
+    background: #EEEDFE;
+    border-radius: 16px;
+    padding: 1rem;
+}
+
+.history-section .section-title {
+    color: #534AB7;
+}
+
+.history-card {
+    background: white;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+}
+
+.history-date {
+    font-weight: 500;
+    color: #534AB7;
+    margin-bottom: 4px;
+}

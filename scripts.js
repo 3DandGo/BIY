@@ -1,6 +1,8 @@
 let selectedMood = "";
 let goodThings = [];
 
+loadHistory();
+
 function selectMood(mood) {
     selectedMood = mood;
     document.getElementById("selectedMood").textContent = mood + "を選びました";
@@ -46,6 +48,7 @@ function saveEntry() {
 
     alert("今日の記録を保存しました！🌟");
     resetForm();
+    loadHistory();
 }
 
 function resetForm() {
@@ -54,4 +57,30 @@ function resetForm() {
     document.getElementById("selectedMood").textContent = "";
     document.getElementById("goodList").innerHTML = "";
     document.getElementById("diaryInput").value = "";
+}
+
+function loadHistory() {
+    let allEntries = JSON.parse(localStorage.getItem('biyEntries') || '[]');
+    let historyList = document.getElementById("historyList");
+    historyList.innerHTML = "";
+
+    if (allEntries.length === 0) {
+        historyList.textContent = "まだ記録がありません";
+        return;
+    }
+
+    allEntries.reverse().forEach(entry => {
+        let card = document.createElement("div");
+        card.className = "history-card";
+
+        let goodList = entry.goodThings.map(item => `⭐ ${item}`).join("<br>");
+
+        card.innerHTML = `
+            <p class = "history-date">${entry.date}</p>
+            <p>気分: ${entry.mood}</p>
+            <p>良いこと:<br>${goodList}</p>
+            <p>一言：${entry.diary}</p>
+        `;
+        historyList.appendChild(card);
+    });
 }
