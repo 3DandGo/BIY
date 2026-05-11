@@ -27,12 +27,31 @@ function renderGoodList() {
 
 function saveEntry() {
     let diary = document.getElementById("diaryInput").value;
+
     let entry = {
         date: new Date().toLocaleDateString("ja-JP"),
         mood: selectedMood,
         goodThings: goodThings,
         diary: diary
     };
-    console.log("保存しました：", entry);
+
+    // 今までの記録を取得する
+    let allEntries = JSON.parse(localStorage.getItem('biyEntries') || '[]');
+
+    //新しい記録を追加する
+    allEntries.push(entry);
+
+    // localStorageに保存する
+    localStorage.setItem('biyEntries', JSON.stringify(allEntries));
+
     alert("今日の記録を保存しました！🌟");
+    resetForm();
+}
+
+function resetForm() {
+    selectedMood = "";
+    goodThings = [];
+    document.getElementById("selectedMood").textContent = "";
+    document.getElementById("goodList").innerHTML = "";
+    document.getElementById("diaryInput").value = "";
 }
