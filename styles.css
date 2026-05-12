@@ -75,6 +75,13 @@ body {
     transition: transform 0.2s;
 }
 
+.mood-btn.selected {
+    transform: scale(1.3);
+    background: #EEEDFE;
+    border-radius: 50%;
+    border: 2px solid #534AB7
+}
+
 .mood-btn:hover {
     transform: scale(1.3);
 }
@@ -154,6 +161,21 @@ ul li {
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
+}
+
+.delete-btn {
+    margin-top: 6px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: none;
+    background: #FAECE7;
+    color: #993C1D;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #F5C4B3;
 }
 
 .history-section {
