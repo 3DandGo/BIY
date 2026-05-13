@@ -37,6 +37,19 @@ function renderGoodList() {
 function saveEntry() {
     let diary = document.getElementById("diaryInput").value;
 
+    if (selectedMood === "") {
+        alert("気分を選んでください！");
+        return;
+    }
+    if (goodThings.length === 0) {
+        alert("良いことを1つ以上追加してください！");
+        return;
+    }
+    if (diary === "") {
+        alert("一言を入力してください！");
+        return;
+    }
+
     let entry = {
         date: new Date().toLocaleDateString("ja-JP"),
         mood: selectedMood,
