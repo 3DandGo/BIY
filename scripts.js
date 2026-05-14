@@ -1,5 +1,6 @@
 let selectedMood = "";
 let goodThings = [];
+let currentIndex = 0;
 
 loadHistory();
 
@@ -82,21 +83,24 @@ function resetForm() {
 function loadHistory() {
     let allEntries = JSON.parse(localStorage.getItem('biyEntries') || '[]');
     let historyList = document.getElementById("historyList");
+    let counter = document.getElementById("carouselCounter");
     historyList.innerHTML = "";
 
     if (allEntries.length === 0) {
         historyList.textContent = "まだ記録がありません";
+        counter.textContent = "";
         return;
     }
 
-    allEntries.reverse().forEach((entry, index) => {
-        let card = document.createElement("div");
-        card.className = "history-card";
+        
+        let reversedEntries = [...allEntries].reverse();
+        let entry = reversedEntries[currentIndex]
 
         let goodList = entry.goodThings.map(item => `⭐ ${item}`).join("<br>");
+        let realIndex = allEntries.length - 1 - currentIndex;
 
-        let realIndex = allEntries.length - 1 - index;
-
+        let card = document.createElement("div");
+        card.className = "history-card";
         card.innerHTML = `
             <p class = "history-date">${entry.date}</p>
             <p>気分: ${entry.mood}</p>
@@ -105,7 +109,23 @@ function loadHistory() {
             <button class = "delete-btn" onclick = "deleteEntry(${realIndex})">削除</button>
         `;
         historyList.appendChild(card);
-    });
+        counter.textContent = `${currentIndex + 1} / ${allEntries.length}`;
+}
+
+function prevEntry() {
+    let allEntries = JSON.parse(localStorage.getItem('biyEntries') || '[]');
+    if (currentIndex > 0) {
+        currentIndex--;
+        loadHistory();
+    }
+}
+
+function nextEntry() {
+    let allEntries = JSON.parse(localStorage.getItem('biyEntries') || '[]');
+    if (currentIndex < allEntries.length - 1) {
+        currentIndex++;
+        loadHistory();
+    }
 }
 
 function deleteEntry(index) {

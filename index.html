@@ -48,7 +48,14 @@
         <!--過去の記録-->
         <div class = "history-section">
             <p class = "section-title">過去の記録</p>
-            <div id = "historyList"></div>
+
+            <div class = "carousel">
+                <button class = "carousel-btn" onclick = "prevEntry()">◀</button>
+                <div id = "historyList"></div>
+                <button class = "carousel-btn" onclick = "nextEntry()">▶</button>
+            </div>
+
+            <p id = "carouselCounter" class = "carousel-counter"></p>
         </div>
         
         </div> <!--content-->
