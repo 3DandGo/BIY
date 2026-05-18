@@ -20,8 +20,6 @@ body {
 }
 
 .app-header {
-    background: #C8B6E2;
-
     padding: 1.2rem;
     text-align: center;
 }
@@ -236,4 +234,19 @@ ul li {
     font-size: 12px;
     color: #534AB7;
     margin-top: 4px;
+}
+
+.stats-section {
+    background: #EEEDFE;
+    border-radius: 16px;
+    padding: 1rem;
+}
+
+.stats-section .section-title {
+    color: #534AB7;
+}
+
+#moodChart {
+    max-width: 100%;
+    margin-top: 8px;
 }

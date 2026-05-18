@@ -1,8 +1,12 @@
 let selectedMood = "";
 let goodThings = [];
 let currentIndex = 0;
+let moodChart = null;
 
+window.onload = function() {
 loadHistory();
+renderChart();
+}
 
 function selectMood(mood) {
     selectedMood = mood;
@@ -67,7 +71,8 @@ function saveEntry() {
     // localStorageに保存する
     localStorage.setItem('biyEntries', JSON.stringify(allEntries));
 
-    alert("今日の記録を保存しました！🌟");
+    let message = getEncouragementMessage(selectedMood);
+    alert("今日の記録を保存しました！🌟\n\n" + message);
     resetForm();
     loadHistory();
 }
@@ -110,6 +115,8 @@ function loadHistory() {
         `;
         historyList.appendChild(card);
         counter.textContent = `${currentIndex + 1} / ${allEntries.length}`;
+
+        renderChart();
 }
 
 function prevEntry() {
@@ -133,4 +140,91 @@ function deleteEntry(index) {
     allEntries.splice(index, 1);
     localStorage.setItem('biyEntries', JSON.stringify(allEntries));
     loadHistory();
+}
+
+function renderChart() {
+    let allEntries = JSON.parse(localStorage.getItem('biyEntries') || '[]');
+
+    let moodCount = {
+        "最高": 0,
+        "良い": 0,
+        "普通": 0,
+        "良くない": 0,
+        "最悪": 0
+    };
+
+    allEntries.forEach(entry => {
+        if (moodCount[entry.mood] !== undefined) {
+            moodCount[entry.mood]++;
+        }
+    });
+
+    let labels = Object.keys(moodCount);
+    let data = Object.values(moodCount);
+
+    if (moodChart !== null) {
+        moodChart.destroy();
+    }
+
+    let ctx = document.getElementById('moodChart').getContext('2d');
+    moodChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                    "#534AB7",
+                    "#1D9E75",
+                    "#FAC775",
+                    "#F5C4B3",
+                    "#D85A30"
+                ]
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        font: { size: 12 }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function getEncouragementMessage(mood) {
+    let messages = {
+         "最高": [
+            "素晴らしい！その調子で！🌟",
+            "最高の一日ですね！この気持ちを大切に！✨",
+            "あなたは輝いています！😄"
+        ],
+        "良い": [
+            "良い一日でしたね！明日も楽しみ！😊",
+            "その笑顔を忘れずに！🌸",
+            "良い気分は周りにも伝わりますよ！"
+        ],
+        "普通": [
+            "普通の日も大切な一日です！💪",
+            "今日も一日お疲れ様でした！",
+            "明日はもっと良い日になりますよ！🌈"
+        ],
+        "良くない": [
+            "今日は大変でしたね。でも乗り越えました！💪",
+            "辛い日もあります。自分を責めないで！🌸",
+            "明日は必ず良くなります。今日もお疲れ様！"
+        ],
+        "最悪": [
+            "本当に大変でしたね。よく頑張りました！🌟",
+            "どんな底にも終わりがあります。あなたは強い！💪",
+            "今日の自分を褒めてあげてください。生きてるだけで十分！🌈"
+        ]
+    };
+
+    let moodMessages = messages[mood];
+    let randomIndex = Math.floor(Math.random() * moodMessages.length);
+    return moodMessages[randomIndex];
 }
